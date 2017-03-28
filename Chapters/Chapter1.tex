@@ -1,0 +1,129 @@
+
+%----------------------------------------------------------------------------------------
+%	SECTION 1
+%----------------------------------------------------------------------------------------
+
+\section{Theoretical Fundamentals}
+\subsection{Waterfall Model}
+The Waterfall model is a sequential model for software projects development. It is a sequential model and its name is given because of how the different phases follow one another.
+
+\begin{figure}[!h]
+	\center
+	\label{figure3}
+	\includegraphics[scale=0.30]{Figures/waterfall} \\
+	\caption {Waterfall Model}
+\end{figure}
+
+\noindent \textbf{Analysis Phase}: Execution of models and diagrams that explain the problem and its solution. It normally explains what is the problem to be solved, the requirements and constraints to solve it, as well as a brief and general hardware/software specification. It is also in this phase that a division of member’s tasks is made with also the deadlines for each different stage of the project. \\[\baselineskip]
+%\newpage
+\textbf{Design Phase}: A more in-depth Hardware/Software specification. In this phase, there needs to be a more scientific explanation of the problem and the solutions that will solve it.\\[\baselineskip]
+\textbf{Implementation Phase}: Creation of a final prototype that solves the initial problem.\\[\baselineskip]
+\textbf{Verification Phase}: Testing the final prototype in all the different situations that the product may face and do the needed changes so the final product passes those tests.\\[\baselineskip]
+\textbf{Maintenance Phase}: Support and maintenance of the final product.\\[\baselineskip]
+\indent In all the stages of the project a verification of the last phase should be done, before starting the following phase of the project.\\
+\indent Despite being a sequential model, the Waterfall Model allows the return to earlier
+phases of the project to correct mistakes that were only noticed ahead or, for example, some specification was poorly made, being possible correcting the mistakes before moving forward.
+
+\subsection{Hypervisor}
+Layer of software that allows to run several independent execution environments in a single
+computer\\
+\indent The bare-metal hypervisors run directly on the native hardware\\
+\indent Virtualizing the critical hardware devices to create several isolated partitions
+
+\begin{figure}[!h]
+	\center
+	\label{figure6}
+	\includegraphics[scale=0.65]{Figures/Hypervisor} \\
+	\caption {Hypervisor}
+\end{figure}
+
+\newpage
+\section{Analysis Phase}
+
+\subsection{Problem Statement}
+In a world where the need for critical embedded systems is rising, and where also the complexity of these systems is getting bigger and bigger, there was also a need for a way to bring the best performance possible in these systems. One of these solutions was a possibility to run multiple Operating Systems in the same hardware, thus improving the performance, which was achieved with the help of an Hypervisor.\\
+\indent The Hypervisor provides a layer of abstraction between the hardware and the Operating Systems, making the connection to the hardware creating a transparent feel for the OS’s. It also manages the OS’s’ scheduling times. However, when the different OS’s running on top of the Hypervisor need to communicate between each other, the regular ways of communicating, through TCP/IP or other wireless based communication protocol, are not ideal and can slow-down the performance of the system, sometimes to an unusable state.\\
+\indent For that reason, a standard Hypervisor will implement an Inter-Partition Communication, or IPC, mechanism, which allows seamless communication between the different partitions through the Hypervisor layer.\\
+\indent However, for some critical systems, the communication needs to be as fast as possible and one solution is to accelerate it in hardware.
+
+\subsection{Market Study}
+
+“Ontology-driven Metamodeling Towards Hypervisor Design Automation: Hardware based Inter-Partition Communication” by Ana Rita Fernandes Martins\\
+\indent ”Shared-Memory Optimizations for Inter-Virtual-Machine Communication”\\
+\indent XenLoop \cite{Nastide2010}\\
+
+\subsection{Inter-Partition Communication (IPC)}
+\begin{figure}[!htbp]
+\center
+\label{figure7}
+\includegraphics[scale=0.35]{Figures/IPC} \\
+\caption {IPC location}
+\end{figure}
+To communicate between the virtualized Guest OSs there is a need for a quick communication method\\
+\indent Inter-Partition Communication is a crucial module in a Hypervisor whose Guests’ need to communicate\\
+\indent However, some improvements can be made by implementing the communication system directly in hardware
+
+\subsection{Requirements}
+
+\subsubsection{Functional Requirements}
+\begin{itemize}
+\item Manage communication between guest OSs
+\item Accelerate the communication in hardware
+\end{itemize}
+\subsubsection{Non-Functional Requirements}
+\begin{itemize}
+\item The generated code shall be compatible with Cortex™-A9 processor architecture
+\end{itemize}
+
+\subsection{Constraints}
+
+\subsubsection{Management}
+\begin{itemize}  
+	\item Meeting the specified deadlines
+	\item Group composed only by two elements
+	\item Limited to about 15 hours of weekly work per element
+	\item The Hypervisor parts will be co-developed with other groups, making the final result depend on external factors
+\end{itemize}
+
+\subsubsection{Technical}
+\begin{itemize}
+	\item Use of ZYBO Zynq-7000 Development Board
+	\item Integrate with \(\mu\)TZVisor
+	\item Use Vivado
+	\item Use Chipscope
+	\item Use GNU Toolchain
+\end{itemize}
+
+\subsection{Resources}
+\begin{itemize}
+	\item Vivado
+	\item ZYBO Zynq-7000 Development Board
+\end{itemize}
+
+\subsubsection{Use Cases}
+
+\subsubsection{Events}
+
+\subsubsection{State Diagram}
+
+\subsubsection{Sequence Diagram}
+
+\subsection{Task Division}
+\begin{figure}[!htbp]
+\center
+\label{figure4}
+\includegraphics[scale=0.8]{Figures/TaskDivision} \\
+\caption {Task Division}
+\end{figure}
+
+\subsection{Gantt Diagram}
+\begin{figure}[!htbp]
+\center
+\label{figure5}
+\includegraphics[scale=0.54]{Figures/Gantt} \\
+\caption {Gantt Diagram}
+\end{figure}
+\textbf{Red:} Jose Ribeiro	\textbf{Blue:} Nuno Silva	\textbf{Green:} Both
+%\FloatBarrier
+\newpage
+

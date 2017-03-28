@@ -1,0 +1,192 @@
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[
+11pt, % The default document font size, options: 10pt, 11pt, 12pt
+a4paper,
+english,
+onehalfspacing, %singlespacing, % Single line spacing, alternatives: onehalfspacing or doublespacing
+]{article}
+
+%\renewcommand{\baselinestretch}{1.3}
+
+\usepackage[T1]{fontenc}    % Output font encoding for international characters
+\usepackage[utf8]{inputenc} % Required for inputting international characters
+
+\usepackage{sectsty}
+
+\sectionfont{\huge}
+\subsectionfont{\LARGE}
+\subsubsectionfont{\Large}
+\paragraphfont{\large}
+
+\setcounter{secnumdepth}{4} % Number subsubsections in the chapters
+\setcounter{tocdepth}{4}    % Put paragraph in the table of contents
+
+\usepackage{palatino} % Use the Palatino font by default
+%\usepackage{courier} % Required for the courier font
+
+\usepackage[margin=1.5in]{geometry} % Set the margins 
+\usepackage{fancyhdr} % Required for custom headers
+\usepackage{graphicx} % Required to insert images
+
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+
+\usepackage[nottoc,notlof,notlot]{tocbibind} % Include bibliography in the table of contents, remove List of Figures and Tables
+
+\usepackage{verbatim} %for comments
+
+%\usepackage{siunitx}
+
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{enumitem}
+
+%\usepackage[usenames,dvipsnames]{color} % Required for custom colors
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings} % Required for insertion of code
+\usepackage{caption}
+\usepackage{framed}
+
+\setlength{\parindent}{15pt}
+\setlength{\parskip}{5pt}
+
+
+%----------------------------------------------------------------------------------------
+%	SET UP THE HEADER AND FOOTER
+%----------------------------------------------------------------------------------------
+% Set up the header and footer
+\pagestyle{fancy}
+\lhead{} % Top left header
+\chead{} % Top center head
+\rhead{\hmwkTitle} % Top right header
+
+\lfoot{} % Bottom left footer
+\cfoot{ \thepage } % Bottom center footer
+\rfoot{} % Bottom right footer
+\renewcommand\headrulewidth{0.4pt} % Size of the header rule
+\renewcommand\footrulewidth{0.4pt} % Size of the footer rule
+
+\newcommand{\hmwkTitle}{IPC - Inter Partition Communication} % Assignment title
+
+
+\begin{document}
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+\begin{titlepage}
+	
+	\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+	
+	\begin{center}
+		% Include a department/university logo
+		\begin{figure}
+		\centering
+		\begin{minipage}{.5\textwidth}
+		  \begin{flushleft}
+		  \includegraphics[width=.4\linewidth]{Figures/EE}
+		  \end{flushleft}
+		\end{minipage}%
+		\begin{minipage}{.5\textwidth}
+		  \begin{flushright}
+		  \includegraphics[width=.4\linewidth]{Figures/CA}
+		  \end{flushright}
+		\end{minipage}\\[1.5cm]
+		\end{figure}
+		
+
+		\textsc{\LARGE University of Minho}\\[1cm] % University name
+		\textsc{\Large Embedded Systems Research Group}\\[1cm] % Thesis type
+		
+		\HRule \\[0.4cm] % Horizontal line
+		{\huge \bfseries IPC \\ Inter Partition Communication\par}\vspace{0.4cm} % Title
+		\HRule \\[2.5cm] % Horizontal line
+		
+%		{\scshape\Large Analysis Report\par}\vspace{1cm} % Report Type
+		
+%		\includegraphics[scale = 0.45]{Figures/virtualFences}\vspace{1cm}
+		
+		\begin{minipage}[t]{0.4\textwidth}
+			\begin{flushleft} \large
+				\emph{\textbf{Authors:}}\\ {José \textsc{Ribeiro} A71881 \\Nuno \textsc{Silva} A70616} 
+			\end{flushleft}
+		\end{minipage}
+		\begin{minipage}[t]{0.4\textwidth}
+			\begin{flushright} \large
+				\emph{\textbf{Advisors:}} \\{Adriano \textsc{Tavares} \\Vitor \textsc{Silva}} % Supervisor name - remove the \href bracket to remove the link  
+			\end{flushright}
+		\end{minipage}\\[2.5cm]
+		
+		
+%		{\large \today} % Date
+		{\large Academic Year: 2016/2017}
+		
+		\vfill
+	\end{center}
+\end{titlepage}
+
+\newpage
+\pagenumbering{roman}  % Use roman page numbering style (i, ii, iii, iv...) for the pre-content pages
+
+%----------------------------------------------------------------------------------------
+%	LIST OF CONTENTS/FIGURES/TABLES PAGES
+%----------------------------------------------------------------------------------------
+\tableofcontents % Prints the main table of contents
+
+\newpage
+%\renewcommand{\listfigurename}{Figures}
+\listoffigures % Prints the list of figures
+
+\newpage
+%\renewcommand{\listtablename}{Tables}
+\listoftables % Prints the list of tables
+
+%\newpage
+%\lstlistoflistings
+
+\newpage
+
+
+%----------------------------------------------------------------------------------------
+%	CONTENT - CHAPTERS/SECTIONS
+%----------------------------------------------------------------------------------------
+
+\pagenumbering{arabic} % Begin numeric (1,2,3...) page numbering
+
+% Include the chapters of the thesis as separate files from the Chapters folder
+% Uncomment the lines as you write the chapters
+
+\include{Chapters/Chapter1}
+\include{Chapters/Chapter2} 
+%\include{Chapters/Chapter3}
+%\include{Chapters/Chapter4} 
+%\include{Chapters/Chapter5} 
+
+
+%----------------------------------------------------------------------------------------
+%	THESIS CONTENT - APPENDICES
+%----------------------------------------------------------------------------------------
+
+\appendix % Cue to tell LaTeX that the following "chapters" are Appendices
+
+% Include the appendices of the thesis as separate files from the Appendices folder
+% Uncomment the lines as you write the Appendices
+
+%\include{Appendices/AppendixA}
+%\include{Appendices/AppendixB}
+%\include{Appendices/AppendixC}
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+%\bibliographystyle{abbrv}
+\bibliographystyle{unsrt}
+\bibliography{refs}
+
+
+
+%----------------------------------------------------------------------------------------
+\end{document}
