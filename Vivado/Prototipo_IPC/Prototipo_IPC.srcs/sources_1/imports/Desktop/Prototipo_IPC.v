@@ -21,50 +21,58 @@
 
 
 module Prototipo_IPC(
-    input [1:0] Guest_ID,
+    input [1:0] Guest_ID_in,
     input clk,
     input [31:0] addr1_in,
     input [31:0] addr2_in,
     input [31:0] addr3_in,
     input [31:0] addr4_in,
-    output [3:0] Signal_Guest,
-    output [31:0] current_addr
+    output reg [3:0] Signal_Guest,
+    output reg [31:0] current_addr,
     //input rst,
-    //inout [31:0] Data
+    input [2048:0] Data_in,
+    output [2048:0] Data_out
     );
+    
     
     reg [31:0] addr1;
     reg [31:0] addr2;
     reg [31:0] addr3;
     reg [31:0] addr4;   
-    reg [31:0] current_addr;
     
-    always @ (addr1)
-    	assign addr1 = addr1_in;
+    always @ (addr1_in != 0)
+    	addr1 <= addr1_in;
     	
-    always @ (addr2)
-    	assign addr2 = addr2_in;
+    always @ (addr2_in != 0)
+    	addr2 <= addr2_in;
     	
-    always @ (addr3)
-    	assign addr3 = addr3_in;
+    always @ (addr3_in != 0)
+    	addr3 <= addr3_in;
     	
-    always @ (addr4)
-    	assign addr4 = addr4_in;
+    always @ (addr4_in != 0)
+    	addr4 <= addr4_in;
+  
     
-    reg [3:0] Signal_Guest;
+    reg [1:0] Guest_ID; 
+    
+    always @ (Guest_ID_in)
+    	Guest_ID <= Guest_ID_in;
+    	
     
     always @ (posedge clk)
     begin
         case(Guest_ID)
-        0 : current_addr = addr1;
-        1 : current_addr = addr2;
-        2 : current_addr = addr3;
-        3 : current_addr = addr4;
+        0 : current_addr <= addr1;
+        1 : current_addr <= addr2;
+        2 : current_addr <= addr3;
+        3 : current_addr <= addr4;
         endcase
     end
 
+
     //always @ (clk)
     //    Signal_Guest =  Signal_Guest && 1 << Guest_ID;
+    
 
 	always @ (clk)
     begin
