@@ -19,6 +19,17 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+module Signal_Manager(
+	input [1:0] Guest_ID_in,
+	input [1:0] Guest_ID_dest,
+	input signal,
+	output 
+	
+
+);
+
+endmodule
+
 
 module Prototipo_IPC(
     input [1:0] Guest_ID_in,
