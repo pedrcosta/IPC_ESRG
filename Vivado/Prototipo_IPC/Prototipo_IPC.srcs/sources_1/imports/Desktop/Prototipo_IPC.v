@@ -19,6 +19,36 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+module Signal_Manager(
+	input [1:0] Guest_ID_in,
+	input [1:0] Guest_ID_Dest_in,
+	input signal,
+	output interrupt
+	
+);
+
+	reg [1:0] Guest_ID;
+	reg [1:0] Guest_ID_Dest;
+
+	always @ (Guest_ID_in or Guest_ID_Dest_in) begin
+    	Guest_ID      <= Guest_ID_in;
+    	Guest_ID_Dest <= Guest_ID_Dest_in;
+    end
+    
+    reg [3:0] Guest_Signal;
+    
+    always @ (signal)
+    	Guest_Signal <= Guest_Signal || (signal << Guest_ID_Dest);
+
+    
+    assign interrupt = Guest_Signal || (1 << Guest_ID);  /////// ISTO FUNCIONA???
+    
+    always @ (interrupt == 1)
+    	Guest_Signal <= Guest_Signal && (0 << Guest_ID);  /////// ISTO FUNCIONA???
+    
+
+endmodule
+
 
 module Prototipo_IPC(
     input [1:0] Guest_ID,
@@ -39,19 +69,24 @@ module Prototipo_IPC(
     reg [31:0] addr4;   
     reg [31:0] current_addr;
     
-    always @ (addr1)
+    always @ (addr1_in != 0)
     	addr1 <= addr1_in;
     	
-    always @ (addr2)
+    always @ (addr2_in != 0)
     	addr2 <= addr2_in;
     	
-    always @ (addr3)
+    always @ (addr3_in != 0)
     	addr3 <= addr3_in;
     	
-    always @ (addr4)
+    always @ (addr4_in != 0)
     	addr4 <= addr4_in;
+  
     
-    reg [3:0] Signal_Guest;
+    reg [1:0] Guest_ID; 
+    
+    always @ (Guest_ID_in)
+    	Guest_ID <= Guest_ID_in;
+    	
     
     always @ (posedge clk)
     begin
