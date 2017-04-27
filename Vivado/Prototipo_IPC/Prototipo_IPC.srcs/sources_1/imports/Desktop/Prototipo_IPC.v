@@ -40,16 +40,16 @@ module Prototipo_IPC(
     reg [31:0] current_addr;
     
     always @ (addr1)
-    	assign addr1 = addr1_in;
+    	addr1 <= addr1_in;
     	
     always @ (addr2)
-    	assign addr2 = addr2_in;
+    	addr2 <= addr2_in;
     	
     always @ (addr3)
-    	assign addr3 = addr3_in;
+    	addr3 <= addr3_in;
     	
     always @ (addr4)
-    	assign addr4 = addr4_in;
+    	addr4 <= addr4_in;
     
     reg [3:0] Signal_Guest;
     
