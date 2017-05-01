@@ -21,12 +21,31 @@
 
 module Signal_Manager(
 	input [1:0] Guest_ID_in,
-	input [1:0] Guest_ID_dest,
+	input [1:0] Guest_ID_Dest_in,
 	input signal,
-	output 
+	output interrupt
 	
-
 );
+
+	reg [1:0] Guest_ID;
+	reg [1:0] Guest_ID_Dest;
+
+	always @ (Guest_ID_in or Guest_ID_Dest_in) begin
+    	Guest_ID      <= Guest_ID_in;
+    	Guest_ID_Dest <= Guest_ID_Dest_in;
+    end
+    
+    reg [3:0] Guest_Signal;
+    
+    always @ (signal)
+    	Guest_Signal <= Guest_Signal || (signal << Guest_ID_Dest);
+
+    
+    assign interrupt = Guest_Signal || (1 << Guest_ID);  /////// ISTO FUNCIONA???
+    
+    always @ (interrupt == 1)
+    	Guest_Signal <= Guest_Signal && (0 << Guest_ID);  /////// ISTO FUNCIONA???
+    
 
 endmodule
 
