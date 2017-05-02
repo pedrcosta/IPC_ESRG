@@ -20,6 +20,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 module Signal_Manager(
+	input clk,
+	input rst,
 	input [1:0] Guest_ID_in,
 	input [1:0] Guest_ID_Dest_in,
 	input signal,
@@ -51,14 +53,15 @@ endmodule
 
 
 module Prototipo_IPC(
-    input [1:0] Guest_ID_in,
     input clk,
+	input rst,
+    input [1:0] Guest_ID_in,
     input [31:0] ID_addr1_in,
     input [31:0] ID_addr2_in,
     input [31:0] ID_addr3_in,
     input [31:0] ID_addr4_in,
     output Signal_Guest,
-    //input rst,
+    output [29:0] current_addr,
     input [2048:0] Data_in,
     output [2048:0] Data_out
     );
@@ -95,7 +98,7 @@ module Prototipo_IPC(
     	
     reg [31:0] current_ID_addr;
     
-    wire [29:0] current_addr;
+    //wire [29:0] current_addr;
     wire [1:0] current_ID_dest;
     
     always @ (posedge clk) begin
@@ -116,10 +119,14 @@ module Prototipo_IPC(
 	assign Dest_Guest_Signal = (Data_in != 0) ? 1 : 0;
 	
 	Signal_Manager Signal_Manager(
+		.clk(clk),
+		.rst(rst),
 		.Guest_ID_in(Guest_ID),
 		.Guest_ID_Dest_in(current_ID_dest),
 		.signal(Dest_Guest_Signal),
 		.interrupt(Signal_Guest)
 	);
+	
+	assign Data_out = Data_in;
     
 endmodule
