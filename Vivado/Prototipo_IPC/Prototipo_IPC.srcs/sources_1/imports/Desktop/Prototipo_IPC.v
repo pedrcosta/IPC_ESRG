@@ -28,25 +28,23 @@ module Signal_Manager(
 	output interrupt
 	
 );
-
-	reg [1:0] Guest_ID;
-	reg [1:0] Guest_ID_Dest;
-
-	always @ (Guest_ID_in or Guest_ID_Dest_in) begin
-    	Guest_ID      <= Guest_ID_in;
-    	Guest_ID_Dest <= Guest_ID_Dest_in;
-    end
     
     reg [3:0] Guest_Signal;
     
-    always @ (signal)
-    	Guest_Signal <= Guest_Signal || (signal << Guest_ID_Dest);
+	always @ (signal) begin
+    	case(Guest_ID_Dest_in)
+        	    0 : Guest_Signal <= Guest_Signal || 4'b0001;
+            	1 : Guest_Signal <= Guest_Signal || 4'b0010;
+            	2 : Guest_Signal <= Guest_Signal || 4'b0100;
+            	3 : Guest_Signal <= Guest_Signal || 4'b1000;
+		endcase
+	end
 
     
-    assign interrupt = Guest_Signal && (1 << Guest_ID);  
+    assign interrupt = Guest_Signal && (1 << Guest_ID_in);  
     
     always @ (interrupt == 1)
-    	Guest_Signal <= Guest_Signal && (0 << Guest_ID);
+    	Guest_Signal <= Guest_Signal && (0 << Guest_ID_in);
     
 
 endmodule
@@ -62,8 +60,8 @@ module Prototipo_IPC(
     input [31:0] ID_addr4_in,
     output Signal_Guest,
     output [29:0] current_addr,
-    input [2048:0] Data_in,
-    output [2048:0] Data_out
+    input wire [2047:0] Data_in,
+    output wire [2047:0] Data_out
     );
     
     
