@@ -41,10 +41,10 @@ module Signal_Manager(
     	Guest_Signal <= Guest_Signal || (signal << Guest_ID_Dest);
 
     
-    assign interrupt = Guest_Signal || (1 << Guest_ID);  /////// ISTO FUNCIONA???
+    assign interrupt = Guest_Signal && (1 << Guest_ID);  
     
     always @ (interrupt == 1)
-    	Guest_Signal <= Guest_Signal && (0 << Guest_ID);  /////// ISTO FUNCIONA???
+    	Guest_Signal <= Guest_Signal && (0 << Guest_ID);
     
 
 endmodule
@@ -53,34 +53,39 @@ endmodule
 module Prototipo_IPC(
     input [1:0] Guest_ID_in,
     input clk,
-    input [31:0] addr1_in,
-    input [31:0] addr2_in,
-    input [31:0] addr3_in,
-    input [31:0] addr4_in,
-    output reg [3:0] Signal_Guest,
-    output reg [31:0] current_addr,
+    input [31:0] ID_addr1_in,
+    input [31:0] ID_addr2_in,
+    input [31:0] ID_addr3_in,
+    input [31:0] ID_addr4_in,
+    output Signal_Guest,
     //input rst,
     input [2048:0] Data_in,
     output [2048:0] Data_out
     );
     
     
-    reg [31:0] addr1;
-    reg [31:0] addr2;
-    reg [31:0] addr3;
-    reg [31:0] addr4;   
+    reg [31:0] ID_addr1;
+    reg [31:0] ID_addr2;
+    reg [31:0] ID_addr3;
+    reg [31:0] ID_addr4;
     
-    always @ (addr1_in != 0)
-    	addr1 <= addr1_in;
+    reg [1:0] current_Guest_ID_dest;
+    
+    always @ (ID_addr1_in != 0) begin
+    	ID_addr1 <= ID_addr1_in [31:0];
+    end
     	
-    always @ (addr2_in != 0)
-    	addr2 <= addr2_in;
+    always @ (ID_addr2_in != 0) begin
+        ID_addr2 <= ID_addr2_in [31:0];
+    end
     	
-    always @ (addr3_in != 0)
-    	addr3 <= addr3_in;
+    always @ (ID_addr3_in != 0) begin
+        ID_addr3 <= ID_addr3_in [31:0];
+    end
     	
-    always @ (addr4_in != 0)
-    	addr4 <= addr4_in;
+    always @ (ID_addr4_in != 0) begin
+        ID_addr4 <= ID_addr4_in [31:0];
+    end
   
     
     reg [1:0] Guest_ID; 
@@ -88,31 +93,33 @@ module Prototipo_IPC(
     always @ (Guest_ID_in)
     	Guest_ID <= Guest_ID_in;
     	
+    reg [31:0] current_ID_addr;
     
-    always @ (posedge clk)
-    begin
-        case(Guest_ID)
-        0 : current_addr <= addr1;
-        1 : current_addr <= addr2;
-        2 : current_addr <= addr3;
-        3 : current_addr <= addr4;
-        endcase
-    end
-
-
-    //always @ (clk)
-    //    Signal_Guest =  Signal_Guest && 1 << Guest_ID;
+    wire [29:0] current_addr;
+    wire [1:0] current_ID_dest;
     
-
-	always @ (clk)
-    begin
+    always @ (posedge clk) begin
         case(Guest_ID)
-        0 : Signal_Guest = 4'b0001;
-        1 : Signal_Guest = 4'b0010;
-        2 : Signal_Guest = 4'b0100;
-        3 : Signal_Guest = 4'b1000;
+        0 : current_ID_addr <= ID_addr1;
+        1 : current_ID_addr <= ID_addr2;
+        2 : current_ID_addr <= ID_addr3;
+        3 : current_ID_addr <= ID_addr4;
         endcase
     end
     
+    assign current_addr = current_ID_addr [29:0];
+	assign current_ID_dest = current_ID_addr [31:30];
+	
+	
+	wire Dest_Guest_Signal;
+	
+	assign Dest_Guest_Signal = (Data_in != 0) ? 1 : 0;
+	
+	Signal_Manager Signal_Manager(
+		.Guest_ID_in(Guest_ID),
+		.Guest_ID_Dest_in(current_ID_dest),
+		.signal(Dest_Guest_Signal),
+		.interrupt(Signal_Guest)
+	);
     
 endmodule
