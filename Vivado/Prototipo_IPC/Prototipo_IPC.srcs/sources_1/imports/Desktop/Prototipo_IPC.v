@@ -22,34 +22,28 @@
 module Signal_Manager(
 	input clk,
 	input rst,
-	input [1:0] Guest_ID_in,
-	input [1:0] Guest_ID_Dest_in,
-	input signal,
-	output reg interrupt
-	
+	input [1:0] Guest_ID_i,       // Active Guest ID      
+	input [1:0] Dest_Guest_ID_i,  // Destination Guest ID
+	input Signal_Send_Data_i,     // When Active Guest ID send data to Dest Guest ID
+	output reg Signal_Guest_o     // To signal Active Guest to read new message
 );
     
-    reg [3:0] Guest_Signal;
-//    reg interrupt;
+    reg [3:0] Guest_Signal_r4;
 
 	always @ (posedge clk) begin
 		if (rst) begin
-			Guest_Signal <= 4'b0000;				
+			Guest_Signal_r4 <= 4'b0000;				
 		end
-		if(interrupt) begin
-			Guest_Signal[Guest_ID_in] <= 0;
-			//interrupt <= 0;
+		if(Signal_Guest_o) begin
+			Guest_Signal_r4[Guest_ID_i] <= 0;
 		end
-//		if(signal) begin
-//			Guest_Signal[Guest_ID_Dest_in] <= 1'b1;
-//		end
+		if(Signal_Send_Data_i) begin
+			Guest_Signal_r4[Dest_Guest_ID_i] <= 1'b1;
+		end
 	end 
     
-    always @(posedge signal) begin
-    	Guest_Signal[Guest_ID_Dest_in] <= 1'b1;
-    end
-    always @(Guest_ID_in) begin
-    	interrupt = Guest_Signal[Guest_ID_in];    	    	
+    always @(Guest_ID_i) begin
+    	Signal_Guest_o = Guest_Signal_r4[Guest_ID_i];    	    	
     end
     
 endmodule
@@ -58,91 +52,69 @@ endmodule
 module Prototipo_IPC(
     input clk,
 	input rst,
-    input [1:0] Guest_ID_in,
-    input [31:0] ID_addr1_in,
-    input [31:0] ID_addr2_in,
-    input [31:0] ID_addr3_in,
-    input [31:0] ID_addr4_in,
-    output Signal_Guest,
-//    output [29:0] current_addr,
-    input wire [2047:0] Data_in,
-    output wire [2047:0] Data_out
+    input [1:0]  Guest_ID_i,
+    input [31:0] ID_addr1_i,
+    input [31:0] ID_addr2_i,
+    input [31:0] ID_addr3_i,
+    input [31:0] ID_addr4_i,
+    
+    output Signal_Guest_o,
+    output [29:0] Dest_Guest_Addr_o,
+    
+    input wire  [2047:0] Data_i,
+    output wire [2047:0] Data_o
     );    
     
-    reg [31:0] ID_addr1;
-    reg [31:0] ID_addr2;
-    reg [31:0] ID_addr3;
-    reg [31:0] ID_addr4;
+    reg [31:0] ID_addr1_r32;
+    reg [31:0] ID_addr2_r32;
+    reg [31:0] ID_addr3_r32;
+    reg [31:0] ID_addr4_r32;
     
-    reg [1:0] current_Guest_ID_dest;
-    
-    always @ (ID_addr1_in != 0) begin
-    	ID_addr1 <= ID_addr1_in [31:0];
+    always @ (ID_addr1_i != 0) begin
+    	ID_addr1_r32 <= ID_addr1_i [31:0];
     end
     	
-    always @ (ID_addr2_in != 0) begin
-        ID_addr2 <= ID_addr2_in [31:0];
+    always @ (ID_addr2_i != 0) begin
+        ID_addr2_r32 <= ID_addr2_i [31:0];
     end
     	
-    always @ (ID_addr3_in != 0) begin
-        ID_addr3 <= ID_addr3_in [31:0];
+    always @ (ID_addr3_i != 0) begin
+        ID_addr3_r32 <= ID_addr3_i [31:0];
     end
     	
-    always @ (ID_addr4_in != 0) begin
-        ID_addr4 <= ID_addr4_in [31:0];
+    always @ (ID_addr4_i != 0) begin
+        ID_addr4_r32 <= ID_addr4_i [31:0];
     end
       
-    reg [1:0] Guest_ID; 
-    
-    always @ (Guest_ID_in)
-    	Guest_ID <= Guest_ID_in;
+    reg [1:0] Guest_ID_r2; 
+        
+    always @ (Guest_ID_i)
+    	Guest_ID_r2 <= Guest_ID_i;
     	
-//    reg [31:0] current_ID_addr;    
-    wire [31:0] current_ID_addr;    
-    wire [29:0] current_addr;
-    wire [1:0]  current_ID_dest;
+    wire [31:0] Dest_Guest_ID_addr_w32;    
+    wire [1:0]  Dest_Guest_ID_w2;    
     
-    assign current_ID_addr = (Guest_ID_in == 0) ? ID_addr1 :
-    						 (Guest_ID_in == 1) ? ID_addr2 :
-    						 (Guest_ID_in == 2) ? ID_addr3 :
-    						 (Guest_ID_in == 3) ? ID_addr4 : 0;
-    
-//    always @ (posedge clk) begin
-////    	if(rst) begin
-////			ID_addr1 <= 32'b0;;
-////			ID_addr2 <= 32'b0;
-////			ID_addr3 <= 32'b0;
-////			ID_addr4 <= 32'b0;
-			
-////			current_Guest_ID_dest <= 2'b0;
-////			Guest_ID <= 2'b0;
-////			current_ID_addr <= 31'b0;
-////		end
-//        case(Guest_ID)
-//        0 : current_ID_addr <= ID_addr1;
-//        1 : current_ID_addr <= ID_addr2;
-//        2 : current_ID_addr <= ID_addr3;
-//        3 : current_ID_addr <= ID_addr4;
-//        endcase
-//    end
-
-    
-    assign current_addr = current_ID_addr[29:0];
-	assign current_ID_dest = current_ID_addr[31:30];
+    assign Dest_Guest_ID_addr_w32 = (Guest_ID_i == 0) ? ID_addr1_r32 :
+    						 		(Guest_ID_i == 1) ? ID_addr2_r32 :
+    						 		(Guest_ID_i == 2) ? ID_addr3_r32 :
+    						 		(Guest_ID_i == 3) ? ID_addr4_r32 : 0;
+     
+    assign Dest_Guest_Addr_o = Dest_Guest_ID_addr_w32[29:0];
+	assign Dest_Guest_ID_w2  = Dest_Guest_ID_addr_w32[31:30];
 		
 	wire Dest_Guest_Signal;
-	
-	assign Dest_Guest_Signal = (Data_in != 0) ? 1 : 0;
+		
+	assign Dest_Guest_Signal = (Data_i != 0) ? 1 : 0;
 	
 	Signal_Manager Signal_Manager(
 		.clk(clk),
 		.rst(rst),
-		.Guest_ID_in(Guest_ID),
-		.Guest_ID_Dest_in(current_ID_dest),
-		.signal(Dest_Guest_Signal),
-		.interrupt(Signal_Guest)
+		.Guest_ID_i(Guest_ID_r2),
+		.Dest_Guest_ID_i(Dest_Guest_ID_w2),
+		.Signal_Send_Data_i(Dest_Guest_Signal),
+		.Signal_Guest_o(Signal_Guest_o)
 	);
-	
-	assign Data_out = Data_in;
+		
+	assign Data_o = Data_i;
     
 endmodule
