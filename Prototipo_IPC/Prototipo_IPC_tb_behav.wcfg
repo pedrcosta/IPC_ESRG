@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="Prototipo_IPC_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="Prototipo_IPC_tb" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="130500001fs"></ZoomEndTime>
+      <Cursor1Time time="90000000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="175"></NameColumnWidth>
+      <ValueColumnWidth column_width="138"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="16" />
+   <wvobject fp_name="/Prototipo_IPC_tb/RUN" type="logic">
+      <obj_property name="ElementShortName">RUN</obj_property>
+      <obj_property name="ObjectShortName">RUN</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Prototipo_IPC_tb/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Prototipo_IPC_tb/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Prototipo_IPC_tb/Guest_ID_in" type="array">
+      <obj_property name="ElementShortName">Guest_ID_in[1:0]</obj_property>
+      <obj_property name="ObjectShortName">Guest_ID_in[1:0]</obj_property>
+      <obj_property name="CustomSignalColor">#00FF00</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Prototipo_IPC_tb/ID_addr1_in" type="array">
+      <obj_property name="ElementShortName">ID_addr1_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ID_addr1_in[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Prototipo_IPC_tb/ID_addr2_in" type="array">
+      <obj_property name="ElementShortName">ID_addr2_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ID_addr2_in[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Prototipo_IPC_tb/ID_addr3_in" type="array">
+      <obj_property name="ElementShortName">ID_addr3_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ID_addr3_in[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Prototipo_IPC_tb/ID_addr4_in" type="array">
+      <obj_property name="ElementShortName">ID_addr4_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ID_addr4_in[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Prototipo_IPC_tb/Signal_Guest" type="logic">
+      <obj_property name="ElementShortName">Signal_Guest</obj_property>
+      <obj_property name="ObjectShortName">Signal_Guest</obj_property>
+      <obj_property name="CustomSignalColor">#FF0000</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Prototipo_IPC_tb/ipc/Dest_Guest_Signal" type="logic">
+      <obj_property name="ElementShortName">Dest_Guest_Signal</obj_property>
+      <obj_property name="ObjectShortName">Dest_Guest_Signal</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Prototipo_IPC_tb/ipc/Signal_Manager/Signal_Send_Data_i" type="logic">
+      <obj_property name="ElementShortName">Signal_Send_Data_i</obj_property>
+      <obj_property name="ObjectShortName">Signal_Send_Data_i</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Prototipo_IPC_tb/Data_in" type="array">
+      <obj_property name="ElementShortName">Data_in[2047:0]</obj_property>
+      <obj_property name="ObjectShortName">Data_in[2047:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Prototipo_IPC_tb/Data_out" type="array">
+      <obj_property name="ElementShortName">Data_out[2047:0]</obj_property>
+      <obj_property name="ObjectShortName">Data_out[2047:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Prototipo_IPC_tb/ipc/Signal_Manager/Guest_Signal_r4" type="array">
+      <obj_property name="ElementShortName">Guest_Signal_r4[3:0]</obj_property>
+      <obj_property name="ObjectShortName">Guest_Signal_r4[3:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+   <wvobject fp_name="/Prototipo_IPC_tb/ipc/Signal_Manager/Guest_ID_i" type="array">
+      <obj_property name="ElementShortName">Guest_ID_i[1:0]</obj_property>
+      <obj_property name="ObjectShortName">Guest_ID_i[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Prototipo_IPC_tb/ipc/Signal_Manager/Dest_Guest_ID_i" type="array">
+      <obj_property name="ElementShortName">Dest_Guest_ID_i[1:0]</obj_property>
+      <obj_property name="ObjectShortName">Dest_Guest_ID_i[1:0]</obj_property>
+   </wvobject>
+</wave_config>
